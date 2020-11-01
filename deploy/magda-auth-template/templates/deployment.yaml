@@ -38,7 +38,10 @@ See chart value file for details of the logic used to generate this setting valu
             "--externalUrl", {{ .Values.global.externalUrl | quote }},
             "--authPluginRedirectUrl", {{ .Values.authPluginRedirectUrl | default .Values.global.authPluginRedirectUrl | quote }},
             "--authApiUrl", "http://authorization-api/v0",
-            "--authPluginConfigJson", "/etc/{{ .Chart.Name }}-config/authPluginConfig.json"
+            "--authPluginConfigJson", "/etc/{{ .Chart.Name }}-config/authPluginConfig.json",
+            "--arcgisClientId", {{ .Values.arcgisClientId | quote }},
+            "--arcgisInstanceBaseUrl", {{ .Values.arcgisInstanceBaseUrl | quote }},
+            "--esriOrgGroup", {{ .Values.esriOrgGroup| quote }}
         ]
         volumeMounts:
           - name: gateway-config
@@ -80,6 +83,11 @@ See chart value file for details of the logic used to generate this setting valu
             secretKeyRef:
               name: db-passwords
               key: session-db-client
+        - name: ARCGIS_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: oauth-secrets
+              key: arcgis-client-secret
 {{- end }}
       # --- load cookie setting from gateway-config
       volumes:
@@ -89,3 +97,4 @@ See chart value file for details of the logic used to generate this setting valu
         - name: "{{ .Chart.Name }}-config"
           configMap:
             name: "{{ .Chart.Name }}-config"
+        

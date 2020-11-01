@@ -5,6 +5,15 @@ global:
   externalUrl: ""
   authPluginRedirectUrl: "/sign-in-redirect"
 
+# -- ArcGIS Client ID
+arcgisClientId: ""
+
+# -- ArcGIS Server Base URL
+arcgisInstanceBaseUrl: ""
+
+# -- Optional; ArcGIS Org Group
+esriOrgGroup: ""
+
 # -- the redirection url after the whole authentication process is completed.
 # Authentication Plugins will use this value as default.
 # The following query paramaters can be used to supply the authentication result:
