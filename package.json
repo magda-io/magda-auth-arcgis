@@ -1,8 +1,8 @@
 {
-  "name": "magda-auth-template",
+  "name": "magda-auth-arcgis",
   "version": "1.0.0",
-  "description": "A Magda Authentication Plugin Template. You can use this as a base to build your own Authentication Plugin",
-  "repository": "https://github.com/magda-io/magda-auth-template.git",
+  "description": "A Magda Authentication Plugin for ArcGIS / Esri system",
+  "repository": "https://github.com/magda-io/magda-auth-arcgis.git",
   "author": "",
   "license": "Apache-2.0",
   "private": true,
@@ -15,7 +15,7 @@
     "test": "mocha --require ts-node/register \"src/test/**/*.spec.ts\"",
     "docker-build-local": "create-docker-context-for-node-component --build --push --tag auto --local",
     "docker-build-prod": "create-docker-context-for-node-component --build --push --tag auto",
-    "helm-lint": "helm lint deploy/magda-auth-template -f deploy/test-deploy.yaml",
+    "helm-lint": "helm lint deploy/magda-auth-arcgis -f deploy/test-deploy.yaml",
     "helm-docs": "helm-docs -t ./README.md.gotmpl -o ../../README.md",
     "retag-and-push": "retag-and-push"
   },
@@ -44,7 +44,7 @@
   },
   "config": {
     "docker": {
-      "name": "data61/magda-auth-template",
+      "name": "data61/magda-auth-arcgis",
       "include": "node_modules dist Dockerfile package.json assets"
     },
     "jwtSecret": "squirrel",
