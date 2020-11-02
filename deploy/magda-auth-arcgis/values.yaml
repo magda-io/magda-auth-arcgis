@@ -38,10 +38,10 @@ authPluginRedirectUrl:
 
 authPluginConfig:
   # -- the unique key of the auth plugin. Allowed characters: [a-zA-Z0-9\-]
-  key: "test-auth-plugin"
+  key: "arcgis"
   
   # -- the display name of the auth plugin.
-  name: "Test Auth Plugin"
+  name: "ArcGIS"
   
   # -- the display icon URL of the auth plugin.
   iconUrl: "/icon.svg"

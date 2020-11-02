@@ -125,7 +125,7 @@ app.get("/healthz", (req, res) => res.send("OK"));
  * a 36x36 size icon to be shown on frontend login page
  */
 app.get("/icon.svg", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "../assets/generic-logo.svg"))
+    res.sendFile(path.resolve(__dirname, "../assets/esri-logo.svg"))
 );
 
 /**
