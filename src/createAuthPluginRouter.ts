@@ -82,7 +82,10 @@ export default function createAuthPluginRouter(
         callbackURL,
         // Overrides 'https://www.arcgis.com/sharing/oauth2/authorize'
         authorizationURL: `${options.arcgisInstanceBaseUrl}/sharing/rest/oauth2/authorize`,
-        tokenURL: `${options.arcgisInstanceBaseUrl}/sharing/rest/oauth2/token`
+        // Overrides 'https://www.arcgis.com/sharing/oauth2/token'
+        tokenURL: `${options.arcgisInstanceBaseUrl}/sharing/rest/oauth2/token`,
+        // Overrides 'https://www.arcgis.com/sharing/rest/community/self?f=json'
+        userProfileURL: `${options.arcgisInstanceBaseUrl}/sharing/rest/community/self?f=json`
     };
 
     const router: express.Router = express.Router();
