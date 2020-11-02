@@ -83,12 +83,12 @@ See chart value file for details of the logic used to generate this setting valu
             secretKeyRef:
               name: db-passwords
               key: session-db-client
+{{- end }}
         - name: ARCGIS_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: oauth-secrets
               key: arcgis-client-secret
-{{- end }}
       # --- load cookie setting from gateway-config
       volumes:
         - name: gateway-config
