@@ -72,10 +72,6 @@ export default function createAuthPluginRouter(
         throw new Error("Required client secret can't be empty!");
     }
 
-    if (!options.arcgisInstanceBaseUrl) {
-        throw new Error("Required arcgisInstanceBaseUrl can't be empty!");
-    }
-
     const strategyOptions: StrategyOptions = {
         clientID: clientId,
         clientSecret: clientSecret,
