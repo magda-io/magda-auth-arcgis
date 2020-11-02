@@ -79,14 +79,20 @@ export default function createAuthPluginRouter(
     const strategyOptions: StrategyOptions = {
         clientID: clientId,
         clientSecret: clientSecret,
-        callbackURL,
-        // Overrides 'https://www.arcgis.com/sharing/oauth2/authorize'
-        authorizationURL: `${options.arcgisInstanceBaseUrl}/sharing/rest/oauth2/authorize`,
-        // Overrides 'https://www.arcgis.com/sharing/oauth2/token'
-        tokenURL: `${options.arcgisInstanceBaseUrl}/sharing/rest/oauth2/token`,
-        // Overrides 'https://www.arcgis.com/sharing/rest/community/self?f=json'
-        userProfileURL: `${options.arcgisInstanceBaseUrl}/sharing/rest/community/self?f=json`
+        callbackURL
     };
+
+    // Expect options.arcgisInstanceBaseUrl to be something like https://some.portal.gov.au/arcgis
+    if (options.arcgisInstanceBaseUrl) {
+        // Overrides 'https://www.arcgis.com/sharing/oauth2/authorize'
+        strategyOptions.authorizationURL = `${options.arcgisInstanceBaseUrl}/sharing/rest/oauth2/authorize`;
+
+        // Overrides 'https://www.arcgis.com/sharing/oauth2/token'
+        strategyOptions.tokenURL = `${options.arcgisInstanceBaseUrl}/sharing/rest/oauth2/token`;
+
+        // Overrides 'https://www.arcgis.com/sharing/rest/community/self?f=json'
+        strategyOptions.userProfileURL = `${options.arcgisInstanceBaseUrl}/sharing/rest/community/self?f=json`;
+    }
 
     const router: express.Router = express.Router();
 
