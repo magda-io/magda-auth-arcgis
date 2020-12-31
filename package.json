@@ -39,7 +39,7 @@
     "lodash": "^4.17.20",
     "passport": "0.2.2",
     "passport-arcgis": "^0.1.8",
-    "urijs": "^1.19.2",
+    "urijs": "^1.19.4",
     "yargs": "^16.1.0"
   },
   "config": {
