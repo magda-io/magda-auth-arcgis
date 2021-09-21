@@ -1,6 +1,6 @@
 {
   "name": "magda-auth-arcgis",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "A Magda Authentication Plugin for ArcGIS / Esri system",
   "repository": "https://github.com/magda-io/magda-auth-arcgis.git",
   "author": "",
