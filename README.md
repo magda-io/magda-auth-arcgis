@@ -1,12 +1,36 @@
 # magda-auth-arcgis
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square)
+![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square)
 
 A Magda Authentication Plugin Template. You can use this as a base to build your own Magda Authentication Plugin.
 
 Requires MAGDA version 0.0.58 or above.
 
 To deploy the authentication plugin with your MAGDA instance, please check [MAGDA Gateway Helm Chart Document](https://github.com/magda-io/magda/blob/master/deploy/helm/internal-charts/gateway/README.md).
+
+### How to Use
+1. Add the auth plugin as a [Helm Chart Dependency](https://helm.sh/docs/helm/helm_dependency/)
+```yaml
+- name: magda-auth-arcgis
+  version: 1.1.0
+  repository: https://charts.magda.io
+```
+
+2. Config the auth plugin with client Id:
+```yaml
+magda-auth-arcgis:
+  arcgisClientId: xxxxxx
+```
+
+3. Config Gatway to add the auth plugin to Gateway's plugin list (More details see [here](https://github.com/magda-io/magda/blob/master/deploy/helm/internal-charts/gateway/README.md))
+```yaml
+gateway:
+  authPlugins:
+  - key: "arcgis"
+    baseUrl: http://magda-auth-arcgis
+```
+
+4. Create a secret `oauth-secrets` in your deployment Magda namespace with the correct value for `arcgis-client-secret` key
 
 **Homepage:** <https://github.com/magda-io/magda-auth-arcgis>
 
@@ -37,7 +61,6 @@ Kubernetes: `>= 1.14.0-0`
 | authPluginConfig.qrCodeExtraInfoHeading | string | `""` | Only applicable & compulsory when authenticationMethod = "QR-CODE". If present, will displayed the heading underneath the QR Code image to provide extra instruction to users. e.g. how to download moile app to scan the QR Code |
 | authPluginConfig.qrCodeImgDataRequestUrl | string | `""` | Only applicable & compulsory when authenticationMethod = "QR-CODE". The url that is used by frontend client to request auth challenge data from the authentication plugin. See [Authentication Plugin Specification](https://github.com/magda-io/magda/blob/master/docs/docs/authentication-plugin-spec.md) for more details |
 | authPluginRedirectUrl | string | `nil` | the redirection url after the whole authentication process is completed. Authentication Plugins will use this value as default. The following query paramaters can be used to supply the authentication result: <ul> <li>result: (string) Compulsory. Possible value: "success" or "failure". </li> <li>errorMessage: (string) Optional. Text message to provide more information on the error to the user. </li> </ul> This field is for overriding the value set by `global.authPluginRedirectUrl`. Unless you want to have a different value only for this auth plugin, you shouldn't set this value. |
-| authPluginRedirectUrl | string | `nil` | the redirection url after the whole authentication process is completed. Authentication Plugins will use this value as default. The following query paramaters can be used to supply the authentication result: <ul> <li>result: (string) Compulsory. Possible value: "success" or "failure". </li> <li>errorMessage: (string) Optional. Text message to provide more information on the error to the user. </li> </ul> This field is for overriding the value set by `global.authPluginRedirectUrl`. Unless you want to have a different value only for this auth plugin, you shouldn't set this value. |
 | autoscaler.enabled | bool | `false` | turn on the autoscaler or not |
 | autoscaler.maxReplicas | int | `3` |  |
 | autoscaler.minReplicas | int | `1` |  |
@@ -48,7 +71,7 @@ Kubernetes: `>= 1.14.0-0`
 | defaultImage.repository | string | `"docker.io/data61"` |  |
 | esriOrgGroup | string | `""` | Optional; ArcGIS Org Group |
 | global | object | `{"authPluginRedirectUrl":"/sign-in-redirect","externalUrl":"","image":{},"rollingUpdate":{}}` | only for providing appropriate default value for helm lint |
-| image | object | `{}` |  |
+| image.name | string | `"magda-auth-arcgis"` |  |
 | replicas | int | `1` | no. of initial replicas |
 | resources.limits.cpu | string | `"50m"` |  |
 | resources.requests.cpu | string | `"10m"` |  |
