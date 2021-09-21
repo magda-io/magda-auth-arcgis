@@ -5,6 +5,8 @@ on:
     types: [published]
 
 env:
+  # [avoid issue when Github action upgraded from 18.04 default to 20.04](https://github.com/aws/aws-cli/issues/5262)
+  AWS_EC2_METADATA_DISABLED: true
   REPO_NAME: magda-auth-arcgis
   # Github account username (used for access github registry)
   GH_USERNAME: magdabot
@@ -30,13 +32,11 @@ jobs:
       - run: yarn build
       - run: yarn test
 
-      - name: Setup Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: v3.2.0
-
       - name: helm-check
         run: yarn helm-lint
+
+      - name: helm-chart-version-check
+        run: yarn check-helm-chart-version deploy/${REPO_NAME}/Chart.yaml
 
       - name: Login to GitHub Package Repository
         env:
@@ -58,7 +58,6 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
       - name: Release Helm Chart
         env:
           CR_TOKEN: "${{ secrets.GH_ACCESS_TOKEN }}"
@@ -72,5 +71,5 @@ jobs:
           helm package -d sync_dir ${REPO_NAME}
           helm repo index --merge "index_dir/index.yaml" sync_dir
           mv -f sync_dir/index.yaml index_dir/index.yaml
-          aws s3 sync sync_dir s3://${S3_BUCKET}/ --acl public-read
-          aws s3 cp index_dir/index.yaml s3://${S3_BUCKET}/index.yaml --acl public-read
+          aws s3 sync sync_dir s3://${S3_BUCKET}/
+          aws s3 cp index_dir/index.yaml s3://${S3_BUCKET}/index.yaml

@@ -2,15 +2,15 @@
 # yarn lockfile v1
 
 
-"@magda/auth-api-client@^0.0.58-alpha.4":
-  version "0.0.58-alpha.4"
-  resolved "https://registry.yarnpkg.com/@magda/auth-api-client/-/auth-api-client-0.0.58-alpha.4.tgz#f27d8764c17bf73d6f637acf5a12c54ada956fff"
-  integrity sha512-2DcqrntnoZZVzF1uKgS2bQ5IJQWTkue8/yo1y0e6LR6hmMWcZv6r18vWD5ca2H8ud2bHE55syKMKpogSuuZ8Ew==
+"@magda/auth-api-client@^0.0.60":
+  version "0.0.60"
+  resolved "https://registry.yarnpkg.com/@magda/auth-api-client/-/auth-api-client-0.0.60.tgz#b001a3df51a8e5a6c65c65945a320047ba19c599"
+  integrity sha512-XW7pTyE47i+Uy6KPZuZz5CZfSRcmROWYZ08zH5G+raS2yadscrqFD6YWOSBNOpCG1GXbI8NEZhVuwOhmLFJjRQ==
 
-"@magda/authentication-plugin-sdk@^0.0.58-alpha.2":
-  version "0.0.58-alpha.2"
-  resolved "https://registry.yarnpkg.com/@magda/authentication-plugin-sdk/-/authentication-plugin-sdk-0.0.58-alpha.2.tgz#43f752b958f55bccf5ac49b70d9e0bd04bcbdb22"
-  integrity sha512-T/DMdVjLYTjKVLCxfJ+AzDYc/jTOtSc9OgyA3qwb5KcM97AbX7wOJ7q4jsX7ook3EX+iDGD58SK8hV9PtoESRQ==
+"@magda/authentication-plugin-sdk@^0.0.60":
+  version "0.0.60"
+  resolved "https://registry.yarnpkg.com/@magda/authentication-plugin-sdk/-/authentication-plugin-sdk-0.0.60.tgz#c99da82f658a44450c4d95ed2dd76b23a2a53d05"
+  integrity sha512-O+vMm1yQ/Uo4lF/EeuCVWTPWlPmu75FNa4nIrl73dLbU+9XW9RSIKnAOiGdRlFMTL494wCCicfBoU24ojlqpVA==
   dependencies:
     connect-pg-simple "^6.0.1"
     cookie-parser "^1.4.5"
@@ -18,12 +18,21 @@
     express-session "^1.17.1"
     lodash "^4.17.4"
     pg "^6.4.0"
-    urijs "^1.18.12"
+    urijs "^1.19.4"
 
-"@magda/docker-utils@^0.0.58-alpha.2":
-  version "0.0.58-alpha.2"
-  resolved "https://registry.yarnpkg.com/@magda/docker-utils/-/docker-utils-0.0.58-alpha.2.tgz#851ee937256405969cd478d90cdd8a38fcb6a3da"
-  integrity sha512-U30/h8qYZZ5Q1RgEPx2pyeystYnnqYx+8lcsEwpJEwgTiG4FBl2u3iTyEKYUJlWIno778X/7HiPf3ltLtxnntw==
+"@magda/ci-utils@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@magda/ci-utils/-/ci-utils-1.0.2.tgz#cf5383611a0a46f1dc7bac256e08a00f3d4c4974"
+  integrity sha512-oJ7LMNCAqG+zbwGM8RPhTepStK8HZqtF4bUWFsCqtaLnRFMKLjbM5qzWj7q/qtzLvIGAtpc45F/hoL0bszDNQQ==
+  dependencies:
+    fs-extra "^9.1.0"
+    recursive-readdir "^2.2.2"
+    yaml "^1.10.2"
+
+"@magda/docker-utils@^0.0.60":
+  version "0.0.60"
+  resolved "https://registry.yarnpkg.com/@magda/docker-utils/-/docker-utils-0.0.60.tgz#7e2002ebdb1472e3206c8e9b8f53730ac298dc33"
+  integrity sha512-jU6mYYeBPkm1cciDOiOqOlSn0Ru5BdhTkpL2qHq3nU+DMLNlgDCHD0sGyCm1iPRaDlo75igO200bFQAR1551pg==
   dependencies:
     fs-extra "^2.1.2"
     is-subdir "^1.0.2"
@@ -215,6 +224,11 @@ array-flatten@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
   integrity sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=
+
+at-least-node@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
+  integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
 balanced-match@^1.0.0:
   version "1.0.0"
@@ -654,6 +668,16 @@ fs-extra@^2.1.2:
     graceful-fs "^4.1.2"
     jsonfile "^2.1.0"
 
+fs-extra@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
+  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
+  dependencies:
+    at-least-node "^1.0.0"
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -709,6 +733,11 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
   integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
+
+graceful-fs@^4.2.0:
+  version "4.2.8"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.8.tgz#e412b8d33f5e006593cbd3cee6df9f2cebbe802a"
+  integrity sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==
 
 growl@1.10.5:
   version "1.10.5"
@@ -867,6 +896,15 @@ jsonfile@^2.1.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-2.4.0.tgz#3736a2b428b87bbda0cc83b53fa3d633a35c2ae8"
   integrity sha1-NzaitCi4e72gzIO1P6PWM6NcKug=
+  optionalDependencies:
+    graceful-fs "^4.1.6"
+
+jsonfile@^6.0.1:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-6.1.0.tgz#bc55b2634793c679ec6403094eb13698a6ec0aae"
+  integrity sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==
+  dependencies:
+    universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
 
@@ -1424,6 +1462,13 @@ readdirp@~3.5.0:
   dependencies:
     picomatch "^2.2.1"
 
+recursive-readdir@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/recursive-readdir/-/recursive-readdir-2.2.2.tgz#9946fb3274e1628de6e36b2f6714953b4845094f"
+  integrity sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==
+  dependencies:
+    minimatch "3.0.4"
+
 require-directory@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
@@ -1716,15 +1761,25 @@ uid2@0.0.x:
   resolved "https://registry.yarnpkg.com/uid2/-/uid2-0.0.3.tgz#483126e11774df2f71b8b639dcd799c376162b82"
   integrity sha1-SDEm4Rd03y9xuLY53NeZw3YWK4I=
 
+universalify@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
+  integrity sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
+
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
   integrity sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=
 
-urijs@^1.18.12, urijs@^1.19.2:
+urijs@^1.19.2:
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.2.tgz#f9be09f00c4c5134b7cb3cf475c1dd394526265a"
   integrity sha512-s/UIq9ap4JPZ7H1EB5ULo/aOUbWqfDi7FKzMC2Nz+0Si8GiT1rIEaprt8hy3Vy2Ex2aJPpOQv4P4DuOZ+K1c6w==
+
+urijs@^1.19.4:
+  version "1.19.7"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.7.tgz#4f594e59113928fea63c00ce688fb395b1168ab9"
+  integrity sha512-Id+IKjdU0Hx+7Zx717jwLPsPeUqz7rAtuVBRLLs+qn+J2nf9NGITWVCxcijgYxBqe83C7sqsQPs6H1pyz3x9gA==
 
 util-deprecate@^1.0.1:
   version "1.0.2"
@@ -1817,6 +1872,11 @@ y18n@^5.0.2:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-5.0.4.tgz#0ab2db89dd5873b5ec4682d8e703e833373ea897"
   integrity sha512-deLOfD+RvFgrpAmSZgfGdWYE+OKyHcVHaRQ7NphG/63scpRvTHHeQMAxGGvaLVGJ+HYVcCXlzcTK0ZehFf+eHQ==
+
+yaml@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
+  integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
 yargs-parser@13.1.2, yargs-parser@^13.1.2:
   version "13.1.2"
