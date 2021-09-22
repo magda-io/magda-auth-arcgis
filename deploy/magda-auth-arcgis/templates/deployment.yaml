@@ -72,13 +72,7 @@ See chart value file for details of the logic used to generate this setting valu
             secretKeyRef:
               name: auth-secrets
               key: session-secret
-        - name: PGUSER
-          value: client
-        - name: PGPASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "magda.db-client-secret-name" (dict "dbName" "session-db" "root" .) | quote }}
-              key: {{ include "magda.db-client-secret-key" (dict "dbName" "session-db" "root" .) | quote }}
+{{ include "magda.db-client-credential-env" (dict "dbName" "session-db" "root" .) | indent 8 }}
         - name: ARCGIS_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
