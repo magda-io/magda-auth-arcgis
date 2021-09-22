@@ -1,6 +1,6 @@
 # magda-auth-arcgis
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square)
+![Version: 1.2.1](https://img.shields.io/badge/Version-1.2.1-informational?style=flat-square)
 
 A Magda Authentication Plugin Template. You can use this as a base to build your own Magda Authentication Plugin.
 
@@ -41,6 +41,10 @@ gateway:
 ## Requirements
 
 Kubernetes: `>= 1.14.0-0`
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://charts.magda.io | magda-common | 1.0.0-alpha.0 |
 
 ## Values
 

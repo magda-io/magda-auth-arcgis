@@ -24,6 +24,8 @@ jobs:
       - run: yarn build
       - run: yarn test
 
+      - run: yarn update-all-charts
+
       - run: yarn helm-lint
 
       - name: Login to GitHub Package Repository
