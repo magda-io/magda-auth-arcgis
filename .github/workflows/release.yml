@@ -32,6 +32,8 @@ jobs:
       - run: yarn build
       - run: yarn test
 
+      - run: yarn update-all-charts
+
       - name: helm-check
         run: yarn helm-lint
 
