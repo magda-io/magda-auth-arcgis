@@ -1,3 +1,7 @@
+# v1.2.2
+
+- Will not check & use global image config anymore. Only magda core repo modules / charts will check & use global image config. 
+
 # v1.2.1
 
 - Use library chart "magda-common" & fix Magda v1 deployment issue on the first deployment
