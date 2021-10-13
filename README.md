@@ -2,7 +2,7 @@
 
 ![Version: 1.2.3](https://img.shields.io/badge/Version-1.2.3-informational?style=flat-square)
 
-A Magda Authentication Plugin Template. You can use this as a base to build your own Magda Authentication Plugin.
+A Magda Authentication Plugin for ArcGIS Server
 
 Requires MAGDA version 0.0.58 or above.
 
