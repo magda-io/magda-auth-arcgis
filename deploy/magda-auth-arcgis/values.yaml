@@ -95,16 +95,14 @@ autoscaler:
   maxReplicas: 3
   targetCPUUtilizationPercentage: 80
 
-image: {}
-  # -- default docker image name 
-  # name: 
+image: 
+  name: "magda-auth-arcgis"
   # repository: 
   # tag: 
   # pullPolicy: 
   # imagePullSecret: 
 
 defaultImage:
-  name: magda-auth-arcgis
   repository: docker.io/data61
   pullPolicy: IfNotPresent
   imagePullSecret: false

@@ -1,3 +1,8 @@
+# v1.2.3
+
+- Upgrade to magda-common lib chart v1.0.0-alpha.4
+- Use named templates from magda-common lib chart for docker image related logic
+
 # v1.2.2
 
 - Will not check & use global image config anymore. Only magda core repo modules / charts will check & use global image config. 

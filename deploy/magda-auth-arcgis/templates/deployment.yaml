@@ -16,18 +16,11 @@ spec:
       labels:
         service: {{ .Chart.Name }}
     spec:
-{{- /*
-See chart value file for details of the logic used to generate this setting value below.!!!
-*/}}
-{{- $imagePullSecret := (ne (.Values.image.imagePullSecret | typeOf) "<nil>") | ternary .Values.image.imagePullSecret ( (ne (.Values.global.image.imagePullSecret | typeOf) "<nil>") | ternary .Values.global.image.imagePullSecret .Values.defaultImage.imagePullSecret ) -}}
-      {{- if ne ($imagePullSecret | toString) "false" }}
-      imagePullSecrets:
-      - name: {{ $imagePullSecret }}
-      {{- end }}
+      {{- include "magda.imagePullSecrets" . | indent 6 }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.image.repository | default .Values.defaultImage.repository }}/{{ .Values.image.name | default .Values.defaultImage.name }}:{{ .Values.image.tag | default .Chart.Version }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy | default .Values.defaultImage.pullPolicy }}
+        image: {{ include "magda.image" . | quote }}
+        imagePullPolicy: {{ include "magda.imagePullPolicy" . | quote }}
         command: [
             "node",
             "/usr/src/app/component/dist/index.js",
@@ -72,7 +65,7 @@ See chart value file for details of the logic used to generate this setting valu
             secretKeyRef:
               name: auth-secrets
               key: session-secret
-{{ include "magda.db-client-credential-env" (dict "dbName" "session-db" "root" .) | indent 8 }}
+        {{- include "magda.db-client-credential-env" (dict "dbName" "session-db" "root" .) | indent 8 }}
         - name: ARCGIS_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
