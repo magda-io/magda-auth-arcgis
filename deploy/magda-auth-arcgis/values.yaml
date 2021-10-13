@@ -9,7 +9,7 @@ global:
 arcgisClientId: ""
 
 # -- ArcGIS Server Base URL
-# If left blank, default urls (i.e. https://www.arcgis.com/sharing/xxxx) will be used
+# e.g. "https://www.arcgis.com"
 arcgisInstanceBaseUrl: ""
 
 # -- Optional; ArcGIS Org Group
