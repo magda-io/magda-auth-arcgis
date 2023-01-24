@@ -1,6 +1,6 @@
 # magda-auth-arcgis
 
-![Version: 1.2.3](https://img.shields.io/badge/Version-1.2.3-informational?style=flat-square)
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square)
 
 A Magda Authentication Plugin for ArcGIS Server
 
@@ -12,9 +12,11 @@ To deploy the authentication plugin with your MAGDA instance, please check [MAGD
 1. Add the auth plugin as a [Helm Chart Dependency](https://helm.sh/docs/helm/helm_dependency/)
 ```yaml
 - name: magda-auth-arcgis
-  version: 1.1.0
-  repository: https://charts.magda.io
+  version: "2.0.0" # or put latest version number here
+  repository: "oci://ghcr.io/magda-io/charts"
 ```
+
+> Since v2.0.0, we use [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) as our official Helm Chart & Docker Image release registry.
 
 2. Config the auth plugin with client Id:
 ```yaml
@@ -45,7 +47,7 @@ Kubernetes: `>= 1.14.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.magda.io | magda-common | 1.0.0-alpha.4 |
+| oci://ghcr.io/magda-io/charts | magda-common | 2.1.1 |
 
 ## Values
 
@@ -73,7 +75,7 @@ Kubernetes: `>= 1.14.0-0`
 | defaultAdminUserId | string | `"00000000-0000-4000-8000-000000000000"` | which system account we used to talk to auth api The value of this field will only be used when `global.defaultAdminUserId` has no value |
 | defaultImage.imagePullSecret | bool | `false` |  |
 | defaultImage.pullPolicy | string | `"IfNotPresent"` |  |
-| defaultImage.repository | string | `"docker.io/data61"` |  |
+| defaultImage.repository | string | `"ghcr.io/magda-io"` |  |
 | esriOrgGroup | string | `""` | Optional; ArcGIS Org Group |
 | global | object | `{"authPluginRedirectUrl":"/sign-in-redirect","externalUrl":"","image":{},"rollingUpdate":{}}` | only for providing appropriate default value for helm lint |
 | image.name | string | `"magda-auth-arcgis"` |  |

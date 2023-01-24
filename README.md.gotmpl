@@ -14,9 +14,11 @@ To deploy the authentication plugin with your MAGDA instance, please check [MAGD
 1. Add the auth plugin as a [Helm Chart Dependency](https://helm.sh/docs/helm/helm_dependency/)
 ```yaml
 - name: magda-auth-arcgis
-  version: 1.1.0
-  repository: https://charts.magda.io
+  version: "2.0.0" # or put latest version number here
+  repository: "oci://ghcr.io/magda-io/charts"
 ```
+
+> Since v2.0.0, we use [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) as our official Helm Chart & Docker Image release registry.
 
 2. Config the auth plugin with client Id:
 ```yaml
