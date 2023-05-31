@@ -3,7 +3,9 @@ kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
 spec:
+  {{- if not .Values.autoscaler.enabled }}
   replicas: {{ .Values.replicas | default 1 }}
+  {{- end }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -13,6 +15,9 @@ spec:
       service: {{ .Chart.Name }}
   template:
     metadata:
+      annotations:
+        checksum/authPluginConfig: {{ .Values.authPluginConfig | mustToRawJson | sha256sum }}
+        checksum/allowedExternalRedirectDomains: {{ .Values.global.authPluginAllowedExternalRedirectDomains | mustToRawJson | sha256sum }}
       labels:
         service: {{ .Chart.Name }}
     spec:
@@ -32,6 +37,7 @@ spec:
             "--authPluginRedirectUrl", {{ .Values.authPluginRedirectUrl | default .Values.global.authPluginRedirectUrl | quote }},
             "--authApiUrl", "http://authorization-api/v0",
             "--authPluginConfigJson", "/etc/{{ .Chart.Name }}-config/authPluginConfig.json",
+            "--allowedExternalRedirectDomainsConfigJson", "/etc/{{ .Chart.Name }}-config/allowedExternalRedirectDomains.json",
             "--arcgisClientId", {{ .Values.arcgisClientId | quote }},
             "--arcgisInstanceBaseUrl", {{ .Values.arcgisInstanceBaseUrl | quote }},
             "--esriOrgGroup", {{ .Values.esriOrgGroup| quote }}
