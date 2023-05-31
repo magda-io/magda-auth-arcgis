@@ -47,6 +47,9 @@
     "urijs": "^1.19.11",
     "yargs": "^16.1.0"
   },
+  "resolutions": {
+    "pg": "8.4.1"
+  },
   "config": {
     "docker": {
       "name": "data61/magda-auth-arcgis",
