@@ -1,7 +1,7 @@
 apiVersion: v2
 name: magda-auth-arcgis
 description: A Magda Authentication Plugin for ArcGIS Server
-version: "2.0.0"
+version: "2.0.1"
 kubeVersion: ">= 1.14.0-0"
 home: "https://github.com/magda-io/magda-auth-arcgis"
 sources: [ "https://github.com/magda-io/magda-auth-arcgis" ]
