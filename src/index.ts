@@ -31,6 +31,13 @@ const argv = yargs
         type: "string",
         coerce: coerceJson
     })
+    .option("allowedExternalRedirectDomainsConfigJson", {
+        describe:
+            "allowedExternalRedirectDomains" +
+            "See https://github.com/magda-io/magda/blob/master/docs/docs/authentication-plugin-spec.md.",
+        type: "string",
+        coerce: coerceJson
+    })
     .option("externalUrl", {
         describe: "The base external URL of the gateway.",
         type: "string",
@@ -111,7 +118,11 @@ const argv = yargs
         default: process.env.USER_ID || process.env.npm_package_config_userId
     }).argv;
 
-const authPluginConfig = (argv.authPluginConfigJson as any) as AuthPluginConfig;
+const authPluginConfig = argv.authPluginConfigJson as any as AuthPluginConfig;
+const allowedExternalRedirectDomains = argv
+    ?.allowedExternalRedirectDomainsConfigJson?.length
+    ? (argv.allowedExternalRedirectDomainsConfigJson as any as string[])
+    : ([] as string[]);
 
 // Create a new Express application.
 const app = express();
@@ -175,6 +186,7 @@ app.use(
     createAuthPluginRouter({
         passport: passport,
         authorizationApi: authApiClient,
+        allowedExternalRedirectDomains,
         authPluginConfig,
         clientId: argv.arcgisClientId,
         clientSecret: argv.arcgisClientSecret,

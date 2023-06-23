@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import { Authenticator, Profile } from "passport";
 import { default as ApiClient } from "@magda/auth-api-client";
 import { Strategy as ArcGISStrategy } from "passport-arcgis";
+import urijs from "urijs";
 import {
     redirectOnError,
     redirectOnSuccess,
@@ -26,6 +27,7 @@ declare global {
 export interface AuthPluginRouterOptions {
     authorizationApi: ApiClient;
     authPluginConfig: AuthPluginConfig;
+    allowedExternalRedirectDomains: string[];
     passport: Authenticator;
     clientId: string;
     clientSecret: string;
@@ -44,12 +46,33 @@ interface StrategyOptions {
     userProfileURL?: string;
 }
 
+function normalizeRedirectionUrl(
+    url: string,
+    allowedExternalRedirectDomains?: string[]
+) {
+    if (!url) {
+        return "/";
+    }
+    const allowedDomains = allowedExternalRedirectDomains?.length
+        ? allowedExternalRedirectDomains
+        : [];
+    const redirectUri = urijs(url);
+    const host = redirectUri.host();
+    if (!host || allowedDomains.indexOf(host) === -1) {
+        return redirectUri.resource();
+    } else {
+        return redirectUri.toString();
+    }
+}
+
 export default function createAuthPluginRouter(
     options: AuthPluginRouterOptions
 ): Router {
     const authorizationApi = options.authorizationApi;
     const passport = options.passport;
     const { key: authPluginKey } = options.authPluginConfig;
+    const allowedExternalRedirectDomains =
+        options.allowedExternalRedirectDomains;
     const clientId = options.clientId;
     const clientSecret = options.clientSecret;
     const externalUrl = options.externalUrl;
@@ -93,59 +116,55 @@ export default function createAuthPluginRouter(
     const router: express.Router = express.Router();
 
     passport.use(
-        new ArcGISStrategy(
-            strategyOptions,
-            function (
-                accessToken: string,
-                refreshToken: string,
-                profile: Profile,
-                cb: (error: any, user?: any, info?: any) => void
-            ) {
-                // ArcGIS Passport provider incorrect defines email instead of emails
-                if ((profile as any).email) {
-                    profile.emails = profile.emails || [];
-                    profile.emails.push({ value: (profile as any).email });
-                }
-
-                profile.displayName =
-                    profile.displayName ||
-                    ((profile as any)._json &&
-                        (profile as any)._json.thumbnail);
-
-                createOrGetUserToken(authorizationApi, profile, "arcgis")
-                    .then((userToken) => {
-                        const url = `${options.arcgisInstanceBaseUrl}/sharing/rest/community/users/${profile.username}?f=json&token=${accessToken}`;
-                        fetch(url, { method: "get" })
-                            .then((res) => {
-                                return res.json();
-                            })
-                            .then((jsObj) => {
-                                const theGroups: any[] = jsObj["groups"];
-                                const groupIds: string[] = theGroups.map(
-                                    (group) => {
-                                        return group["id"];
-                                    }
-                                );
-
-                                const theGroupIds = esriOrgGroup
-                                    ? groupIds.concat([esriOrgGroup])
-                                    : groupIds;
-
-                                cb(null, {
-                                    id: userToken.id,
-                                    session: {
-                                        esriGroups: theGroupIds,
-                                        esriUser: profile.username,
-                                        accessToken: accessToken,
-                                        refreshToken: refreshToken
-                                    }
-                                });
-                            })
-                            .catch((error) => cb(error));
-                    })
-                    .catch((error) => cb(error));
+        new ArcGISStrategy(strategyOptions, function (
+            accessToken: string,
+            refreshToken: string,
+            profile: Profile,
+            cb: (error: any, user?: any, info?: any) => void
+        ) {
+            // ArcGIS Passport provider incorrect defines email instead of emails
+            if ((profile as any).email) {
+                profile.emails = profile.emails || [];
+                profile.emails.push({ value: (profile as any).email });
             }
-        )
+
+            profile.displayName =
+                profile.displayName ||
+                ((profile as any)._json && (profile as any)._json.thumbnail);
+
+            createOrGetUserToken(authorizationApi, profile, "arcgis")
+                .then((userToken) => {
+                    const url = `${options.arcgisInstanceBaseUrl}/sharing/rest/community/users/${profile.username}?f=json&token=${accessToken}`;
+                    fetch(url, { method: "get" })
+                        .then((res) => {
+                            return res.json();
+                        })
+                        .then((jsObj) => {
+                            const theGroups: any[] = jsObj["groups"];
+                            const groupIds: string[] = theGroups.map(
+                                (group) => {
+                                    return group["id"];
+                                }
+                            );
+
+                            const theGroupIds = esriOrgGroup
+                                ? groupIds.concat([esriOrgGroup])
+                                : groupIds;
+
+                            cb(null, {
+                                id: userToken.id,
+                                session: {
+                                    esriGroups: theGroupIds,
+                                    esriUser: profile.username,
+                                    accessToken: accessToken,
+                                    refreshToken: refreshToken
+                                }
+                            });
+                        })
+                        .catch((error) => cb(error));
+                })
+                .catch((error) => cb(error));
+        })
     );
 
     router.get("/", (req, res, next) => {
@@ -224,7 +243,14 @@ export default function createAuthPluginRouter(
             res: express.Response,
             next: express.NextFunction
         ) => {
-            redirectOnSuccess(req.query.state as string, req, res);
+            redirectOnSuccess(
+                normalizeRedirectionUrl(
+                    req.query.state as string,
+                    allowedExternalRedirectDomains
+                ),
+                req,
+                res
+            );
         },
         (
             err: any,
@@ -232,7 +258,15 @@ export default function createAuthPluginRouter(
             res: express.Response,
             next: express.NextFunction
         ): any => {
-            redirectOnError(err, req.query.state as string, req, res);
+            redirectOnError(
+                err,
+                normalizeRedirectionUrl(
+                    req.query.state as string,
+                    allowedExternalRedirectDomains
+                ),
+                req,
+                res
+            );
         }
     );
 
