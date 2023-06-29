@@ -4,6 +4,12 @@ global:
   rollingUpdate: {}
   externalUrl: ""
   authPluginRedirectUrl: "/sign-in-redirect"
+  # -- By default, at end of authentication process, an auth plugin will never redirect the user to an external domain, 
+  # even if `authPluginRedirectUrl` is configured to an URL with an external domain.
+  # Unless an external domain is added to the whitelist i.e. this `authPluginAllowedExternalRedirectDomains` config, 
+  # any auth plugins will always ignore the domain part of the url (if supplied) and only redirect the user to the URL path under the current domain.
+  # Please note: you add a url host string to this list. e.g. "abc.com:8080"
+  authPluginAllowedExternalRedirectDomains: []
 
 # -- ArcGIS Client ID
 arcgisClientId: ""
