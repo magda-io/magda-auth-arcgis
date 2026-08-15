@@ -1,6 +1,6 @@
 # magda-auth-arcgis
 
-![Version: 2.0.1](https://img.shields.io/badge/Version-2.0.1-informational?style=flat-square)
+![Version: 3.0.0-pr.11.0](https://img.shields.io/badge/Version-3.0.0--pr.11.0-informational?style=flat-square)
 
 A Magda Authentication Plugin for ArcGIS Server
 
