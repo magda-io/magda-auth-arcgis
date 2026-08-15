@@ -218,7 +218,7 @@ export default function createAuthPluginRouter(
 
         if (!tokenGood) {
             // Can't get a token, so force the user to sign in again.
-            req.logout();
+            req.logout(() => {});
             res.status(403).send("Not logged in");
         }
 
