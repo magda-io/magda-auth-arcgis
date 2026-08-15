@@ -74,12 +74,43 @@ kubectl exec -n magda "$DBPOD" -c postgresql -- bash -c \
 # -> session|client|t|TLSv1.3
 ```
 
+### C. The CA is actually *verified* (not just present) — negative control
+
+Prove the connection succeeds only because the delivered CA verifies the server
+certificate: with the CA it connects; without it (or with a wrong CA) it fails.
+
+```bash
+# WITH the delivered CA -> verifies + connects
+kubectl exec -n magda deploy/magda-auth-arcgis -- node --input-type=module -e '
+import pg from "pg"; import fs from "fs";
+const ca = fs.readFileSync(process.env.PGSSLROOTCERT, "utf-8");
+const pool = new pg.Pool({ host:"session-db", port:5432, database:"session", ssl:{ rejectUnauthorized:true, ca } });
+const r = await pool.query("SELECT s.ssl, s.version FROM pg_stat_ssl s WHERE pid=pg_backend_pid()");
+console.log("with CA   -> ssl="+r.rows[0].ssl+" "+r.rows[0].version); await pool.end();'
+# with CA   -> ssl=true TLSv1.3
+
+# WITHOUT the CA (same verify-full) -> MUST fail
+kubectl exec -n magda deploy/magda-auth-arcgis -- node --input-type=module -e '
+import pg from "pg";
+const pool = new pg.Pool({ host:"session-db", port:5432, database:"session", ssl:{ rejectUnauthorized:true } });
+try { await pool.query("SELECT 1"); console.log("no CA -> CONNECTED (unexpected!)"); }
+catch(e){ console.log("no CA -> FAILED ->", e.code||e.message); } await pool.end().catch(()=>{});'
+# no CA -> FAILED -> UNABLE_TO_VERIFY_LEAF_SIGNATURE
+```
+
+This is the difference between `require` (encrypt only) and `verify-*` (encrypt
+**and** validate the certificate): under `verify-full` the connection is refused
+unless the CA delivered by the `magda.db-client-ca-env-v1` contract matches the
+server's issuer.
+
 ## Result
 
 Verified on minikube with Magda `7.0.0-alpha.1` and the plugin `3.0.0-pr.11.0`:
 the modernized ESM pod starts (`Listening on port 80`), receives the CA under
 `verify-full`, and the SDK session store connects + writes over the verified TLS
-connection (`ssl = t`, `TLSv1.3`).
+connection (`ssl = t`, `TLSv1.3`). The negative control confirms the CA is
+actually validated — the same `verify-full` connection fails with
+`UNABLE_TO_VERIFY_LEAF_SIGNATURE` when the CA is absent or wrong.
 
 ## Cleanup
 
